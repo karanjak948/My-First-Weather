@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.5.3/cerulean/bootstrap.min.css"
+        integrity="sha512-dQLT/B7byn2LjN/DN4zeBKpwGV6qbidV0XiMRWQOL7TGrV7FkZFldkGG+DGMU+CQnMTcRZlUI7GMWt1j6akNew=="
+        crossorigin="anonymous" />
+    <title>WEATHER</title>
+    <style>
+        /* Flexbox layout for sticky footer */
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content-wrapper {
+            flex: 1;
+        }
+
+        footer {
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content-wrapper"><!-- Wrapper starts here -->
+        <h1 style="text-align: center;">Weather Forecast Built by Algo</h1>
+        <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+            <div class="container">
+                <a href="../" class="navbar-brand">Weather App <span style="color: rgb(39, 117, 161);"> <strong> - Django 
+                        Framework</strong></span></a>
+                <a href="https://openweathermap.org" class="navbar-tech">OpenWeather - Get Your API</a>
+            </div>
+        </div>
+
+        <div id="jumbotron" class="jumbotron" style="text-align: center; margin-top: 60px;">
+            <h1 class="display-5">Weather Desktop App </h1>
+            <h5>In this App you will be able to search any location in the world, and it will respond by <br>showing the 
+                temperature, humidity, and weather description.</h5>
+        </div>
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <form method="post" class="col-md">
+                {% csrf_token %}
+                <div class="input-group">
+                    <input type="text" class="form-control" name="city" placeholder="Choose Your City here ....">
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+            </form>
+        </nav>
+        
+        <div class="row my-4">
+            {% if country_code and coordinate and temp and pressure and humidity %}
+            <div class="col d-flex justify-content-center">
+                <div class="card text-white bg-light mb-6">
+                    <div class="card-body">
+                        <h3><span class="badge badge-primary">Country Code:</span> {{ country_code }}</h3>
+                        <h4><span class="badge badge-primary">Coordinates [X,Y]:</span> {{ coordinate }}</h4>
+                        <h3><span class="badge badge-primary">Temperature in Celsius:</span> {{ temp }}</h3>
+                        <h3><span class="badge badge-primary">Pressure:</span> {{ pressure }}</h3>
+                        <h3><span class="badge badge-primary">Humidity:</span> {{ humidity }}</h3>
+                        <h3><span class="badge badge-primary">Forecast:</span> {{ main }} <img
+                                src="http://openweathermap.org/img/w/{{ icon }}.png" alt="Image" style="width:70px"></h3>
+                        <h3><span class="badge badge-primary">Description:</span> {{ description }}</h3>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div><!-- Wrapper ends here -->
+
+    <footer class="bg-dark text-white text-center py-3">
+        &copy; 2024 Algo. All rights reserved.
+        <a href="https://github.com/algo-dev/weather-app-django" class="btn btn-primary">Source Code</a>
+        <a href="https://www.linkedin.com/in/algo-dev/" class="btn btn-primary ml-3">LinkedIn</a>
+    </footer>
+</body>
+</html>
